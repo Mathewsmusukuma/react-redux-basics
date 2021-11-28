@@ -1,6 +1,5 @@
 import { Form, Input, InputNumber, Button } from "antd";
 import { useDispatch } from "react-redux";
-import { addArticle } from "../../stateManger/actions/articlesListAction";
 import AppLayout from "../layouts/AppLayout";
 
 const layout = {
@@ -29,7 +28,7 @@ const ArticleForm = () => {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    dispatch(addArticle(values.user));
+    dispatch({values});
   };
 
   return (

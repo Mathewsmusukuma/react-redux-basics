@@ -1,4 +1,3 @@
-import AppLayout from "./components/layouts/AppLayout";
 import ArticleList from "./components/articlesLists/ArticleList";
 import ArticleForm from "./components/forms/ArticleForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

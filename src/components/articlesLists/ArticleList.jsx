@@ -1,7 +1,7 @@
 import { List, Avatar, Skeleton } from "antd";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteArticle, fetchArticles } from "../../stateManger/actions/articlesListAction";
+import { fetchArticles } from "../../stateManger/actions/listArticlesAction";
 import CustomLoader from "../CustomLoader";
 import AppLayout from "../layouts/AppLayout";
 
@@ -10,12 +10,11 @@ const ArticleList = () => {
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    dispatch(deleteArticle({ id: id }));
+    dispatch({ id: id });
   };
 
   useEffect(() => {
     dispatch(fetchArticles())
-    console.log(articlesData.articles);
   }, [dispatch])
 
   return (
