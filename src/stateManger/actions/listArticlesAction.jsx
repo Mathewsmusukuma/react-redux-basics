@@ -1,10 +1,11 @@
 import { message } from "antd";
+import axiosInstance from "../../services/axiosInstance";
 import { 
   FETCH_ARTICLE_LIST_REQUEST,
   FETCH_ARTICLE_LIST_SUCCESS, 
   FETCH_ARTICLE_LIST_FAILUIRE
 } from "../constants/action-types";
-  import axiosInstance from "../../services/axiosInstance";
+  
 
 export function fetchArticlesRequest() {
   return { type: FETCH_ARTICLE_LIST_REQUEST };
@@ -16,20 +17,21 @@ export function fetchArticleFailuire() {
   return { type: FETCH_ARTICLE_LIST_FAILUIRE };
 }
 
-export const fetchArticles = () => (dispatch) => {
+export const fetchArticles = () => async (dispatch) => {
   dispatch(fetchArticlesRequest());
-  axiosInstance 
-    .get('users?per_page=10')
-    .then((res) => {
+    try {
+      const res = await  axiosInstance.get('users?per_page=10');
+  
       dispatch(fetchArticleSuccess(res?.data?.data));
-    })
-    .catch((err) => {
+      
+    } catch (err) {
+
       dispatch(fetchArticleFailuire());
       if (err.response) {
-        console.log(err.response);
         message.error(err.response.data.message);
       } else if (err.request) {
         message.error(err.message);
       }
-    });
+      
+    }
 };

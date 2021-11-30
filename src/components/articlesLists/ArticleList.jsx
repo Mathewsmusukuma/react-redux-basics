@@ -2,15 +2,16 @@ import { List, Avatar, Skeleton } from "antd";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchArticles } from "../../stateManger/actions/listArticlesAction";
+import { deteleArticle } from "../../stateManger/actions/deleteArticleAction";
 import CustomLoader from "../CustomLoader";
 import AppLayout from "../layouts/AppLayout";
 
 const ArticleList = () => {
-  const articlesData = useSelector((state) => state.articlesList);
+  const articlesData = useSelector((state) => state.articles);
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    dispatch({ id: id });
+    dispatch(deteleArticle(id));
   };
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const ArticleList = () => {
 
   return (
     <AppLayout>
-      <CustomLoader loading={articlesData?.loading} />
+      <CustomLoader loading={articlesData?.loading}>
       <List
         itemLayout="horizontal"
         dataSource={articlesData?.articles}
@@ -28,7 +29,7 @@ const ArticleList = () => {
             actions={[
               <button
                 key="list-loadmore-edit"
-                onClick={() => handleDelete(item)}
+                onClick={() => handleDelete(item?.id)}
               >
                 Delete
               </button>
@@ -44,6 +45,7 @@ const ArticleList = () => {
           </List.Item>
         )}
       />
+      </CustomLoader>
     </AppLayout>
   );
 };
