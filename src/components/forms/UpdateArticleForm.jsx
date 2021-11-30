@@ -1,5 +1,10 @@
-import { Form, Input, InputNumber, Button } from "antd";
-import { useDispatch } from "react-redux";
+import { Form, Input, Button } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import updateArticle from "../../stateManger/actions/updateArticleAction";
+import articleDetails from "../../stateManger/actions/articleDetailsAction";
+import CustomLoader from "../CustomLoader";
 import AppLayout from "../layouts/AppLayout";
 
 const layout = {
@@ -24,16 +29,34 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const ArticleForm = () => {
+const UpdateArticleForm = () => {
+    const { loading, articles } = useSelector((state) => state.articles);
   const dispatch = useDispatch();
+  const { articleID } = useParams();
+
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    dispatch({values});
+    dispatch(updateArticle(articleID,values));
   };
+
+  useEffect(()=>{
+    dispatch(articleDetails(articleID));
+  },[dispatch, articleID])
+
+  useEffect(()=>{
+    form.setFieldsValue({
+        first_name: articles?.data?.first_name,
+        last_name: articles?.data?.last_name,
+        email: articles?.data?.email,
+      })
+  })
 
   return (
     <AppLayout>
+        <CustomLoader loading={loading}>
       <Form
+        form={form}
         layout="vertical"
         name="nest-messages"
         onFinish={onFinish}
@@ -41,8 +64,8 @@ const ArticleForm = () => {
         style={{marginTop: 20}}
       >
         <Form.Item
-          name={["user", "name"]}
-          label="Name"
+          name='first_name'
+          label="First name"
           rules={[
             {
               required: true,
@@ -52,7 +75,18 @@ const ArticleForm = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          name={["user", "email"]}
+          name='last_name'
+          label="Last name"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name='email'
           label="Email"
           rules={[
             {
@@ -62,33 +96,15 @@ const ArticleForm = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name={["user", "age"]}
-          label="Age"
-          rules={[
-            {
-              type: "number",
-              min: 0,
-              max: 99,
-            },
-          ]}
-        >
-          <InputNumber />
-        </Form.Item>
-        <Form.Item name={["user", "website"]} label="Website">
-          <Input />
-        </Form.Item>
-        <Form.Item name={["user", "introduction"]} label="Introduction">
-          <Input.TextArea />
-        </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit" style={{float: 'right'}}>
-            Submit
+            Update
           </Button>
         </Form.Item>
       </Form>
+      </CustomLoader>
     </AppLayout>
   );
 };
 
-export default ArticleForm;
+export default UpdateArticleForm;

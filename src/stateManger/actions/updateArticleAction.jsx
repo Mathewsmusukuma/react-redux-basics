@@ -10,19 +10,21 @@ export function updateArticleRequest() {
     return { type: UPDATE_ARTICLE_REQUEST };
   }
 
-  export function updateArticleSucess(data) {
-    return { type: UPDATE_ARTICLE_SUCCESS, payload: data };
+  export function updateArticleSucess() {
+    return { type: UPDATE_ARTICLE_SUCCESS };
   }
 
   export function updateArticleFailuire() {
     return { type: UPDATE_ARTICLE_FAILUIRE };
   }
 
-  const updateArticle = (id) => async (dispatch) => {
+  const updateArticle = (id, payload) => async (dispatch) => {
+      console.log(payload);
       dispatch(updateArticleRequest());
       try {
-          const response = await axiosInstance.put(`users/${id}`);
-          dispatch(updateArticleSucess(response?.data) )   
+          await axiosInstance.patch(`users/${id}`, payload);
+          dispatch(updateArticleSucess());
+          window.location.href = "/"; 
       } catch (err) {
           dispatch(updateArticleFailuire())
           if (err.response) {

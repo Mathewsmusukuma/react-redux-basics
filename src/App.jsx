@@ -1,14 +1,18 @@
-import ArticleList from "./components/articlesLists/ArticleList";
-import ArticleForm from "./components/forms/ArticleForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ArticlesListPage from "./pages/listArticles";
+import AddArticlePage from "./pages/addArticles";
+import UpdateArticlePage from "./pages/updateArticle";
+
 function App() {
   return (
     <Router>
-    <Routes>
-    <Route exact path="/"  element={ <ArticleList />}/>
-    <Route exact path="/addarticle" element={<ArticleForm />}/>
-  </Routes>
-</Router>
+      <Routes>
+        <Route exact path="/"  element={ <ArticlesListPage />}/>
+        <Route exact path="/addarticle" element={<AddArticlePage />}/>
+        <Route exact path="/article/updatearticle/:articleID" 
+        element={<UpdateArticlePage />}/>
+      </Routes>
+    </Router>
   );
 }
 

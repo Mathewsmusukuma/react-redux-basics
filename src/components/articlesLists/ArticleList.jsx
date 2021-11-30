@@ -1,5 +1,6 @@
 import { List, Avatar, Skeleton } from "antd";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchArticles } from "../../stateManger/actions/listArticlesAction";
 import { deteleArticle } from "../../stateManger/actions/deleteArticleAction";
@@ -27,12 +28,19 @@ const ArticleList = () => {
         renderItem={(item) => (
           <List.Item
             actions={[
-              <button
-                key="list-loadmore-edit"
-                onClick={() => handleDelete(item?.id)}
+              <Link
+                key="list-delete"
+                to={`article/updatearticle/${item?.id}`}
               >
-                Delete
-              </button>
+                Update
+              </Link>,
+
+              <button
+              key="list-update"
+              onClick={() => handleDelete(item?.id)}
+            >
+              Delete
+            </button>
             ]}
           >
             <Skeleton avatar title={false} loading={item.loading} active>
