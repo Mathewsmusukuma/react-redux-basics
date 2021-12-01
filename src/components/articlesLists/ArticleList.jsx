@@ -74,6 +74,7 @@ const ArticleList = () => {
         </List.Item>
       )}
     />}
+    {articles?.length < 1 && <List dataSource={[]}></List>}
       </CustomLoader>
     </AppLayout>
   );
