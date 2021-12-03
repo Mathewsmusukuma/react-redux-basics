@@ -7,6 +7,24 @@ const initialState = {
 
 function articlesReducer(state = initialState, action) {
   switch (action.type) {
+    // Add article
+    case types.ADD_ARTICLE_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case types.ADD_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        articles: [...state.articles, action.payload]
+      };
+
+    case types.ADD_ARTICLE_FAILUIRE:
+      return {
+        ...state,
+        loading: false
+      };
 
     // FETCH ARTICLES
     case types.FETCH_ARTICLE_LIST_REQUEST:

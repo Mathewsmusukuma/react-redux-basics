@@ -1,6 +1,7 @@
 // POST request actions
 export const ADD_ARTICLE_REQUEST = "ADD_ARTICLE_REQUEST";
 export const ADD_ARTICLE_SUCCESS  = "ADD_ARTICLE_SUCCESS";
+export const ADD_ARTICLE_FAILUIRE = "ADD_ARTICLE_FAILUIRE";
 
 // Fetch (GET) request actions
 export const FETCH_ARTICLE_LIST_REQUEST = "FETCH_ARTICLE_LIST_REQUEST";

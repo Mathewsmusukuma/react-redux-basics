@@ -1,5 +1,8 @@
 import { Form, Input, InputNumber, Button } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import addArticle from "../../stateManger/actions/addArticleAction";
+import CustomLoader from "../CustomLoader";
 import AppLayout from "../layouts/AppLayout";
 
 const layout = {
@@ -25,14 +28,18 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const AddArticleForm = () => {
+  const { loading } = useSelector(state=>state.articles);
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const onFinish = (values) => {
-    dispatch({values});
+    dispatch(addArticle(navigate,values));
   };
 
   return (
     <AppLayout>
+      <CustomLoader loading={loading} >
       <Form
         layout="vertical"
         name="nest-messages"
@@ -87,6 +94,7 @@ const AddArticleForm = () => {
           </Button>
         </Form.Item>
       </Form>
+      </CustomLoader>
     </AppLayout>
   );
 };
